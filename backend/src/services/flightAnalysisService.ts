@@ -726,8 +726,22 @@ export class FlightAnalysisService {
     flightPrices: any[]
   ): Promise<SeasonData[]> {
     // Calculate from actual flight prices with pirce_level 
-    console.log(`[FlightAnalysis] Calculating seasons from using price_level data for ${origin} → ${destination}`);
-    return await this.calculateSeasonsWithDemand(origin, destination, flightPrices);
+    // console.log(`[FlightAnalysis] Calculating seasons from using price_level data for ${origin} → ${destination}`);
+    // return await this.calculateSeasonsWithDemand(origin, destination, flightPrices);
+
+    // ✅ Normalize origin to string
+    const safeOrigin = Array.isArray(origin) ? origin[0] : origin;
+
+    // Calculate from actual flight prices with price_level
+    console.log(
+      `[FlightAnalysis] Calculating seasons using price_level data for ${safeOrigin} → ${destination}`
+    );
+
+    return await this.calculateSeasonsWithDemand(
+      safeOrigin,
+      destination,
+      flightPrices
+    );
   }
 
    /**
